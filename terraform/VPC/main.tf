@@ -11,20 +11,20 @@ resource "aws_vpc" "myvpc" {
 resource "aws_subnet" "PublicSubnet-1" {
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
-  vailability_zone = "us-east-2a"
+  availability_zone = "us-east-2a"
 
   tags = {
-    Name = "MyTerraformSubnet"
+    Name = "MypPublicSubnet-1"
   }
 }
 
 resource "aws_subnet" "PublicSubnet-2" {
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.2.0/24"
-  vailability_zone = "us-east-2b"
+  availability_zone = "us-east-2b"
 
   tags = {
-    Name = "MyTerraformSubnet"
+    Name = "MypPublicSubnet-2"
   }
 }
 
@@ -32,20 +32,20 @@ resource "aws_subnet" "PublicSubnet-2" {
 resource "aws_subnet" "PrivateSubnet-1" {
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.3.0/24"
-  vailability_zone = "us-east-2a"
+  availability_zone = "us-east-2a"
 
   tags = {
-    Name = "MyTerraformSubnet"
+    Name = "MyPrivateSubnet-1"
   }
 }
 
 resource "aws_subnet" "PrivateSubnet-2" {
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.4.0/24"
-  vailability_zone = "us-east-2b"
+  availability_zone = "us-east-2b"
 
   tags = {
-    Name = "MyTerraformSubnet"
+    Name = "MyPrivateSubnet-2"
   }
 }
 
@@ -65,10 +65,16 @@ resource "aws_route_table" "PublicRT" {
 }
 
 # Route table associateion public subnet
-resource "aws_route_table_association" "PublicRTassociation" {
-  subnet_id = aws_subnet.PublicSubnet.id
+resource "aws_route_table_association" "Publicsubnet-1RTassociation" {
+  subnet_id = aws_subnet.PublicSubnet-1.id
   route_table_id = aws_route_table.PublicRT.id
 }
+
+resource "aws_route_table_association" "Publicsubnet-2RTassociation" {
+  subnet_id = aws_subnet.PublicSubnet-2.id
+  route_table_id = aws_route_table.PublicRT.id
+}
+
 
 # Create a Instance
 #resource "aws_instance" "Demo_instance" {
