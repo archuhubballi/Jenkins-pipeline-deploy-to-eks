@@ -8,9 +8,20 @@ resource "aws_vpc" "myvpc" {
 }
 
 # Create a Public Subnet
-resource "aws_subnet" "PublicSubnet" {
+resource "aws_subnet" "PublicSubnet-1" {
   vpc_id = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
+  vailability_zone = "us-east-2a"
+
+  tags = {
+    Name = "MyTerraformSubnet"
+  }
+}
+
+resource "aws_subnet" "PublicSubnet-2" {
+  vpc_id = aws_vpc.myvpc.id
+  cidr_block = "10.0.2.0/24"
+  vailability_zone = "us-east-2b"
 
   tags = {
     Name = "MyTerraformSubnet"
@@ -18,9 +29,20 @@ resource "aws_subnet" "PublicSubnet" {
 }
 
 # Create a Private Subnet
-resource "aws_subnet" "PrivateSubnet" {
+resource "aws_subnet" "PrivateSubnet-1" {
   vpc_id = aws_vpc.myvpc.id
-  cidr_block = "10.0.2.0/24"
+  cidr_block = "10.0.3.0/24"
+  vailability_zone = "us-east-2a"
+
+  tags = {
+    Name = "MyTerraformSubnet"
+  }
+}
+
+resource "aws_subnet" "PrivateSubnet-1" {
+  vpc_id = aws_vpc.myvpc.id
+  cidr_block = "10.0.4.0/24"
+  vailability_zone = "us-east-2b"
 
   tags = {
     Name = "MyTerraformSubnet"
