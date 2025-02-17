@@ -62,15 +62,22 @@ resource "aws_security_group" "eks_sec_group" {
   }
 }
 
- eks_managed_node_groups = {
-        dev = {
-            min_size = 1
-            max_size = 3
-            desired_size = 2
+# Define EKS Node Group (worker nodes)
+resource "aws_eks_node_group" "example_node_group" {
+  cluster_name    = aws_eks_cluster.eks_cluster.name
+  node_group_name = "dev-node-group"
+  node_role_arn   = aws_iam_role.eks_cluster_role.arn  # Use the same IAM role for the node group
+  subnet_ids      = ["subnet-0902d6cf1abf54962", "subnet-055918a834bd0588c", "subnet-056742b14f96d295d", "subnet-0c48f86855dbd96a2"]  # Replace with your VPC subnet IDs
 
-            instance_types = ["t2.small"]
-        }
-    }
+  scaling_config {
+    desired_size = 1  # Set desired node count to 1
+    max_size     = 3
+    min_size     = 1
+  }
+
+  instance_types = ["t2.small"]
+
+  ami_type = "ami-0cb91c7de36eed2cb"  
 }
 
 output "eks_cluster_name" {
