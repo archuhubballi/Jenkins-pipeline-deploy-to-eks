@@ -37,7 +37,7 @@ resource "aws_eks_cluster" "eks_cluster" {
   role_arn = aws_iam_role.eks_cluster_role.arn
 
   vpc_config {
-    subnet_ids = ["subnet-0bf7b8822bd01888e", "subnet-04802234b92b773a2","subnet-07fcdd9fb5e8bcb97","subnet-074eb99eb4c5cf02e"]  # Replace with your VPC subnet IDs
+    subnet_ids = ["subnet-0902d6cf1abf54962", "subnet-055918a834bd0588c","subnet-056742b14f96d295d","subnet-0c48f86855dbd96a2"]  # Replace with your VPC subnet IDs
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_eks_cluster" "eks_cluster" {
 resource "aws_security_group" "eks_sec_group" {
   name        = "eks-sec-group"
   description = "EKS Security Group"
-  vpc_id      = "vpc-0a70732a3d5e8fd3b"  # Replace with your VPC ID
+  vpc_id      = "vpc-086ecee9caad5aebd"  # Replace with your VPC ID
 
   ingress {
     from_port   = 0
