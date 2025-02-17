@@ -62,6 +62,17 @@ resource "aws_security_group" "eks_sec_group" {
   }
 }
 
+ eks_managed_node_groups = {
+        dev = {
+            min_size = 1
+            max_size = 3
+            desired_size = 2
+
+            instance_types = ["t2.small"]
+        }
+    }
+}
+
 output "eks_cluster_name" {
   value = aws_eks_cluster.eks_cluster.name
 }
