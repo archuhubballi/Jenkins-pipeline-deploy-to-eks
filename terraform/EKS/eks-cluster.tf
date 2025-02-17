@@ -77,7 +77,7 @@ resource "aws_eks_node_group" "example_node_group" {
 
   instance_types = ["t2.small"]
 
-  ami_type = "ami-0cb91c7de36eed2cb"  
+  ami_type = "AL2_x86_64"  
 }
 
 output "eks_cluster_name" {
