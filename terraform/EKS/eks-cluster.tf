@@ -15,13 +15,6 @@ resource "aws_iam_role" "eks_cluster_role" {
         Principal = {
           Service = "eks.amazonaws.com"
         }
-      },
-      {
-        Action    = "sts:AssumeRole"
-        Effect    = "Allow"
-        Principal = {
-          Service = "ec2.amazonaws.com"  # Allow EC2 instances to assume this role
-        }
       }
     ]
   })
@@ -67,24 +60,6 @@ resource "aws_security_group" "eks_sec_group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}
-
-# Define EKS Node Group (worker nodes)
-resource "aws_eks_node_group" "example_node_group" {
-  cluster_name    = aws_eks_cluster.eks_cluster.name
-  node_group_name = "dev-node-group"
-  node_role_arn   = aws_iam_role.eks_cluster_role.arn  # Use the same IAM role for the node group
-  subnet_ids      = ["subnet-0902d6cf1abf54962", "subnet-055918a834bd0588c", "subnet-056742b14f96d295d", "subnet-0c48f86855dbd96a2"]  # Replace with your VPC subnet IDs
-
-  scaling_config {
-    desired_size = 1  # Set desired node count to 1
-    max_size     = 3
-    min_size     = 1
-  }
-
-  instance_types = ["t2.small"]
-
-  ami_type = "AL2_x86_64"  
 }
 
 output "eks_cluster_name" {
