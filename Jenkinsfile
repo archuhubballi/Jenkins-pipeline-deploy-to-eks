@@ -12,33 +12,33 @@ pipeline {
 			}
 		stages {
 		    stage('Checkout') {
-            steps {
-                git branch: 'main', url: REPO_URL, credentialsId: 'GitHub-Creds'
+                       steps {
+                          git branch: 'main', url: REPO_URL, credentialsId: 'GitHub-Creds'
             }
         }
-			stage("Create EKS Cluster"){
-			    steps {
-			        script {
-			            dir('terraform/EKS'){
-			                sh "terraform init -reconfigure"
-							sh "terraform validate"
-							sh "terraform plan"
-							sh "terraform apply -auto-approve"  
+		    stage("Create EKS Cluster"){
+			steps {
+			   script {
+			        dir('terraform/EKS'){
+			            sh "terraform init -reconfigure"
+				    sh "terraform validate"
+				    sh "terraform plan"
+				    sh "terraform apply -auto-approve"  
 			            }
 			        }
 			    }
 			}
-			stage("Deploy to EKS") {
-				steps {
-				    script {
-					    dir('kubernetes'){
-					    sh "aws eks update-kubeconfig --name https://52FCD18AF9D0C1D2697D6A09678F8FF4.sk1.us-east-2.eks.amazonaws.com"
-					    sh "kubectl config view"
-					    sh "kubectl apply -f nginx-deployment.yml"
-					    sh "kubectl apply -f nginx-service.yml"
-					    }
-				}
+		     stage("Deploy to EKS") {
+			   steps {
+			       script {
+				 dir('kubernetes'){
+				    sh "aws eks update-kubeconfig --name https://52FCD18AF9D0C1D2697D6A09678F8FF4.sk1.us-east-2.eks.amazonaws.com"
+				    sh "kubectl config view"
+				    sh "kubectl apply -f nginx-deployment.yml"
+				    sh "kubectl apply -f nginx-service.yml"
+				 }
 			}
+		}
 	    }
     }
 }
